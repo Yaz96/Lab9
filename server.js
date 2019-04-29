@@ -51,7 +51,7 @@ function closeServer(){
 		});
 }
 
-runServer(8080, 'mongodb://localhost/posts')
+runServer(8080, 'mongodb://localhost/Clemente-blog-post')
 	.catch(err => console.log(err));
 
 
