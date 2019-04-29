@@ -1,101 +1,80 @@
  const uuid = require('uuid');
+ const mongoose = require('mongoose');
+ mongoose.Promise = global.Promise;
 
-let posts = [ // sportsDB
-					{
-						id: uuid.v4(),
-						title: 'The Beatles',
-						content: 'The Beatles fue una banda de rock inglesa activa...',
-						author: 'Clemente',
-						publishDate: '24-Mar-2019'
-					},
-					{
-						id: uuid.v4(),
-						title: `The Who`,
-						content: 'The Who es una banda británica de rock considerada un icono de la música del siglo XX...',
-						author: 'Clemente',
-						publishDate: '24-Mar-2019'
-					},
-					{
-						id: uuid.v4(),
-					title: `Tool`,
-					content: 'Tool es una banda estadounidense de metal progresivo surgida en 1990 en Los Ángeles, California...',
-					author: 'Clemente',
-					publishDate: '24-Mar-2019'
-					},
-					{
 
-					id: uuid.v4(),
-					title: 'alt-j',
-					content: 'Alt J es una banda inglesa de indie rock, formada en el año 2007. Su álbum debut An Awesome Wave, lanzado en mayo de 2012...',
-					author: 'Carlos',
-					publishDate: '24-Mar-2019'
 
-					}
-				];
+let postSchema = mongoose.Schema({
+	//id : {type : Number, required : true, unique : true},
+	title : {type : String, required : true},
+	content : {type : String, required : true},
+	author : {type : String, required : true},
+	publishDate : {type : String, required : true}
+});
+let Posts = mongoose.model('Posts', postSchema);
 
 
 const Listposts = {  //ListSports
 	get : function(){
-		return posts;
+		return Posts.find()
+		.then (posts=>{
+			return posts;
+		})
+		.catch(err => {
+			throw new Error(err);
+	   });
 	},
 	getauth : function(author){
-		let AthorPosts = [];
-		let blogAuthor= author;
-		posts.forEach(item => {
-			if(item.author == blogAuthor){
-				AthorPosts.push(item);
+
+		return Posts.find({ author : `${author}`})
+		.then(posts => {
+			if (posts){
+				return posts;
 			}
-			
+			throw new Err("Author not found");
+		})
+		.catch(err =>{
+			throw new Error(err);
 		});
-		return AthorPosts;
 
 	},
 
 	post : function(post){
-		post['id'] = uuid.v4();
-		posts.push(post);
-		return post;
+		return Posts.create(post)
+			.then(posts => {
+				return posts;
+			})
+			.catch(err => {
+				 throw new Error(err);
+			});
 	},
 	delete: function(bodyId){
-		let flag = false;
-		for(let i=0; i<posts.length; i++) {
-			if (posts[i].id === bodyId){
-			posts.splice(i, 1);
-			flag = true;
-			}
-		  }
-		  return flag;
+		return Posts.findOneAndRemove({_id : bodyId})
+		//return Posts.findOne({ _id : bodyId})
+
+			.then(post => {
+				if (post){
+					return post;
+				}
+				throw new Err("Post not found");
+			})
+			.catch(err => {
+				throw new Error(err);
+			})
 	},
 
 	put: function(body,paramsId){
 
-		let postaux = [];
-		let i=0;
-		let auxflag = true;
-  while ( auxflag ) {
-	if (i==posts.length){
-		return false;
-		}
-	
-    if (posts[i].id === paramsId){
-		if ("title" in body ){
-			posts[i].title =  body.title;
-		}
-		if ("content" in body ){
-			posts[i].content =  body.content;
-		}
-		if ("author" in body ){
-			posts[i].author =  body.author;
-		}
-		if ("publishDate" in body ){
-			posts[i].publishDate =  body.publishDate;
-		}
-		
-		return posts[i];
-	}
-	
-		i++;
-  	}
+		return Posts.findOneAndUpdate({_id : paramsId}, { $set: body }, { new: true })
+			.then(posts => {
+				if (posts){
+					return posts;
+				}
+				throw new Err("Post not found");
+			})
+			.catch(err =>{
+				throw new Error(err);
+			});
 
 }
 

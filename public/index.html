@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>This is the index </title>
+    <link href="./index.css" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+
+    <form class="SendButton">
+      <button type="submit" class="getPosts"> <!--getSports-->
+        Click me to retrieve
+      </button>
+    </form>
+
+    <br>
+
+    <div class = inputBox >
+        <label for="postId"> ID:     </label>  <!--sportName -->
+        <input id="postId" type="text">
+      </div>
+        <div class = inputBox >
+      <label for="postTitle"> Title: </label>  <!--sportName -->
+      <input id="postTitle" type="text">
+    </div>
+      <br>
+      <div class = inputBox >
+      <label for="postContent"> Content: </label>
+      <input id="postContent" type="text">
+    </div>
+      <br>
+      <label for="postAuthor"> Author: </label>
+      <input id="postAuthor" type="text">
+      <label for="publishDate"> Publish Date: </label>
+      <input id="publishDate" type="text">
+
+        <br>
+
+      <div class = "Buttonsdiv">
+    <span> <button type= "submit" id="sendButton"> Send Post </button> </span>
+    <span> <button type= "submit" id="deleteButton"> Delete Post </button> </span>
+    <span> <button type= "submit" id="updateButton"> Update Post </button> </span> 
+  </div>
+
+    
+
+    <ul id="listOfPosts"> <!--listOfSports-->
+
+    </ul>
+
+    <script
+	  src="https://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

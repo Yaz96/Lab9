@@ -1,0 +1,20 @@
+h1{
+	color: blue;
+}
+
+#postContent{
+	
+	height:200px;
+	width: 800px;
+    font-size:12pt;
+}
+
+.inputBox{
+
+	padding: 20 px 20px;
+}
+
+.Buttonsdiv{
+
+	padding: 20px 20px;
+}
